@@ -1,0 +1,176 @@
+openapi: 3.0.0
+info:
+  title: Coolstore Services API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+paths:
+  /cart/api/carts:
+    post:
+      tags: [CartService]
+      summary: Create a new cart
+      responses:
+        '201':
+          description: Cart created
+    get:
+      tags: [CartService]
+      summary: Get all carts
+      responses:
+        '200':
+          description: List of carts
+
+  /cart/api/carts/{cart_id}:
+    get:
+      tags: [CartService]
+      summary: Get cart by ID
+      parameters:
+        - name: cart_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cart details
+    delete:
+      tags: [CartService]
+      summary: Delete a cart
+      parameters:
+        - name: cart_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Cart deleted
+
+  /cart/api/carts/{cart_id}/checkout:
+    post:
+      tags: [CartService]
+      summary: Checkout a cart
+      parameters:
+        - name: cart_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Checkout completed
+
+  /cart/api/carts/{cart_id}/items/{product_id}:
+    put:
+      tags: [CartService]
+      summary: Add product to cart
+      parameters:
+        - name: cart_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Item added
+
+  /catalog/api/products:
+    get:
+      tags: [CatalogService]
+      summary: Get all products
+      responses:
+        '200':
+          description: List of products
+
+  /catalog/api/products/{product_id}:
+    get:
+      tags: [CatalogService]
+      summary: Get product by ID
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product details
+
+  /catalog/api/products/{current_page}/{high_price}:
+    get:
+      tags: [CatalogService]
+      summary: Get products by page and price filter
+      parameters:
+        - name: current_page
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: high_price
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Filtered products
+
+  /inventory/api/availability/{product_id}:
+    get:
+      tags: [InventoryService]
+      summary: Check availability of a product
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Availability info
+
+  /inventory/api/inventory/migrate:
+    post:
+      tags: [InventoryService]
+      summary: Migrate inventory data
+      responses:
+        '200':
+          description: Migration completed
+
+  /rating/api/ratings:
+    get:
+      tags: [RatingService]
+      summary: Get all ratings
+      responses:
+        '200':
+          description: List of ratings
+    post:
+      tags: [RatingService]
+      summary: Add a rating
+      responses:
+        '201':
+          description: Rating added
+    put:
+      tags: [RatingService]
+      summary: Update a rating
+      responses:
+        '200':
+          description: Rating updated
+
+  /rating/api/ratings/{product_id}:
+    get:
+      tags: [RatingService]
+      summary: Get rating by product
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Rating details
